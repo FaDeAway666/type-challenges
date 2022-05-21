@@ -6,7 +6,7 @@ interface Todo {
 // add MyPick type
 type TodoPreview = MyPick<Todo, "title" | "completed">;
 
-const todo: TodoPreview = {
+export const todo: TodoPreview = {
   title: "Clear",
   completed: false,
 };
