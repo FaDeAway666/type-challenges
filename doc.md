@@ -12,7 +12,27 @@
 
 - infer
 
-  定义一个类型变量，仅能和 extends 关键字连用
+  定义一个`类型变量`，这个变量指代一个不确定的类型，仅能和 extends 关键字连用，且仅能在判断为 true 的语句处使用
+
+  ```ts
+  // 获取返回值类型
+  type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
+
+  // 获取Promise<xx>的xx类型
+  type PromiseType<T> = T extends Promise<infer R> ? R : never;
+  ```
+
+  infer 的几个应用场景：
+
+  1. 解包
+  2. 推断返回值
+  3. 推断联合类型
+     当同一个类型变量可能有多种类型结果的时候，会推断为这些结果的联合类型
+     ```ts
+     type Foo<T> = T extends { a: infer U; b: infer U } ? U : never;
+     type T10 = Foo<{ a: string; b: string }>; // T10 类型为 string
+     type T11 = Foo<{ a: string; b: number }>; // T11 类型为 string | number
+     ```
 
 - keyof
 
